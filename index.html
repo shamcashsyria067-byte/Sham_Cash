@@ -6,23 +6,27 @@
     <title>محفظة شام كاش - Sham Cash</title>
     <style>
         * { box-sizing: border-box; font-family: Tahoma, sans-serif; }
-        body { margin: 0; padding: 15px; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .wallet-container { width: 100%; max-width: 400px; background: #1e293b; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); text-align: center; }
-        .balance-card { background: linear-gradient(135deg, #3b82f6, #1d4ed8); padding: 20px; border-radius: 12px; margin-bottom: 20px; }
-        .balance-card h3 { margin: 0 0 10px 0; font-size: 16px; opacity: 0.9; }
-        .balance-card .amount { font-size: 28px; font-weight: bold; margin: 0; }
-        .actions { display: flex; gap: 10px; margin-bottom: 20px; }
-        .btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .btn-primary { background: #10b981; color: white; }
-        .btn-secondary { background: #334155; color: white; }
-        .transactions { text-align: right; margin-top: 20px; }
-        .transactions h4 { border-bottom: 1px solid #334155; padding-bottom: 8px; font-size: 14px; color: #94a3b8; }
-        .tx-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155; font-size: 13px; }
-    </style>
-</head>
-<body>
-
-    <div class="wallet-container">
-        <h2>شام كاش | Sham Cash</h2>
+        body { margin: 0; padding: 0; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         
-        <div class="balance-card">
+        /* شاشة تسجيل الدخول */
+        #login-screen { width: 100%; max-width: 380px; background: #1e293b; padding: 30px 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center; }
+        .logo-box { width: 70px; height: 70px; background: linear-gradient(135deg, #10b981, #3b82f6); margin: 0 auto 20px auto; border-radius: 16px; display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold; color: white; transform: rotate(45deg); }
+        .logo-box span { transform: rotate(-45deg); }
+        h2 { margin-bottom: 25px; font-size: 22px; color: #f8fafc; }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        .input-group label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 12px 15px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 14px; outline: none; }
+        .input-group input:focus { border-color: #3b82f6; }
+        .btn-login { width: 100%; padding: 12px; background: #3b82f6; border: none; border-radius: 8px; color: white; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-login:hover { background: #2563eb; }
+
+        /* واجهة المحفظة (مخفية حتى يتم تسجيل الدخول) */
+        #wallet-screen { display: none; width: 100%; max-width: 400px; background: #1e293b; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center; }
+        .wallet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 14px; color: #94a3b8; }
+        .balance-card { background: linear-gradient(135deg, #1d4ed8, #3b82f6); padding: 25px 20px; border-radius: 14px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 15px rgba(59, 130, 246,.3); }
+        .balance-card h3 { margin: 0 0 8px 0; font-size: 15px; opacity: 0.9; font-weight: normal; }
+        .balance-card .amount { font-size: 32px; font-weight: bold; margin: 0; letter-spacing: 1px; }
+        .balance-card .sub-text { font-size: 12px; opacity: 0.8; margin-top: 5px; }
+        
+        .actions { display: flex; gap: 12px; margin-bottom: 20px; }
+        .btn-action { flex: 1; padding: 14px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; color: white; background: #334155;
