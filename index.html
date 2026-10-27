@@ -3,269 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - المحفظة</title>
+    <title>تسجيل الدخول</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Cairo Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: '#0e1225',
+                        bgCardDark: '#1a1f38',
+                        inputBg: '#212640',
+                        accentBlue: '#5773ff',
+                        accentHover: '#4662ea',
+                        textMuted: '#8f97b0',
+                        textLink: '#6384ff',
+                        pinkBtn: '#ff4d6d',
+                        cyanGlow: '#4cc9f0',
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1c24;
+            font-family: 'Cairo', sans-serif;
+            background-color: #0e1225;
             color: #ffffff;
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-        }
-        /* الشريط العلوي */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .currency-switch {
-            background-color: #252836;
-            border-radius: 20px;
-            display: flex;
-            padding: 3px;
-            width: 140px;
-        }
-        .currency-btn {
-            flex: 1;
-            text-align: center;
-            padding: 6px 0;
-            font-size: 13px;
-            border-radius: 17px;
-            cursor: pointer;
-            color: #8b92a5;
-        }
-        .currency-btn.active {
-            background-color: #3498db;
-            color: white;
-            font-weight: bold;
-        }
-        .top-icons {
-            display: flex;
-            gap: 10px;
-        }
-        .icon-btn {
-            background-color: #252836;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 16px;
+            overflow-x: hidden;
         }
 
-        /* بطاقة الرصيد */
-        .balance-card {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            border-radius: 20px;
-            padding: 25px 20px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-            margin-bottom: 20px;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
         }
-        .balance-label {
-            font-size: 14px;
-            color: #bfdbfe;
-            margin-bottom: 8px;
+        ::-webkit-scrollbar-track {
+            background: #0e1225;
         }
-        .balance-value {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .pending-balance {
-            font-size: 13px;
-            color: #bfdbfe;
+        ::-webkit-scrollbar-thumb {
+            background: #212640;
+            border-radius: 4px;
         }
 
-        /* أزرار إرسال واستلام */
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        .action-btn {
-            flex: 1;
-            background-color: #252836;
-            border: 1px solid #32374a;
-            border-radius: 16px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-        }
-        .action-btn span {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        .action-btn:hover {
-            background-color: #2f3346;
+        /* Card Soft Glow */
+        .wallet-card {
+            background: linear-gradient(135deg, rgba(74, 130, 246, 0.45) 0%, rgba(37, 75, 196, 0.45) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* خدمات التطبيق الدائرية */
-        .services-grid {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-        .service-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-        }
-        .service-icon {
-            width: 50px;
-            height: 50px;
-            background-color: #252836;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            margin-bottom: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        .service-name {
-            font-size: 12px;
-            color: #8b92a5;
+        .quick-btn-glow {
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
         }
 
-        /* قسم آخر التحويلات */
-        .section-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
+        /* Smooth Screen Transitions */
+        .screen {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
-        
-        .tx-card {
-            background-color: #252836;
-            border-radius: 16px;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #32374a;
-        }
-        .tx-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .tx-icon {
-            width: 42px;
-            height: 42px;
-            background-color: rgba(46, 204, 113, 0.15);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            color: #2ecc71;
-        }
-        .tx-details {
-            display: flex;
-            flex-direction: column;
-        }
-        .tx-name {
-            font-size: 15px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-        .tx-date {
-            font-size: 12px;
-            color: #8b92a5;
-        }
-        .tx-amount {
-            font-size: 16px;
-            font-weight: bold;
-            color: #2ecc71;
-            direction: ltr;
+        .screen-hidden {
+            display: none !important;
+            opacity: 0;
+            transform: scale(0.97);
         }
     </style>
 </head>
-<body>
+<body class="bg-bgDark min-h-screen flex items-center justify-center p-0 md:p-4 select-none">
 
-    <div class="container">
-        <!-- الشريط العلوي -->
-        <div class="top-nav">
-            <div class="currency-switch">
-                <div class="currency-btn">دولار</div>
-                <div class="currency-btn active">ليرة</div>
-            </div>
-            <div class="top-icons">
-                <div class="icon-btn">🔔</div>
-                <div class="icon-btn">⚙️</div>
-            </div>
-        </div>
+    <!-- Container Mockup wrapper -->
+    <div class="w-full max-w-md bg-bgDark min-h-screen md:min-h-[840px] md:max-h-[920px] md:rounded-[40px] md:shadow-2xl border-0 md:border md:border-gray-800 flex flex-col justify-between relative overflow-hidden">
 
-        <!-- بطاقة الرصيد -->
-        <div class="balance-card">
-            <div class="balance-label">إجمالي الرصيد</div>
-            <div class="balance-value">USD 13,000</div>
-            <div class="pending-balance">0 رصيد معلَّق</div>
-        </div>
+        <!-- ========================================== -->
+        <!-- SCREEN 1: LOGIN (تظهر أولاً بشكل افتراضي) -->
+        <!-- ========================================== -->
+        <div id="loginScreen" class="screen w-full min-h-screen md:min-h-full flex flex-col justify-between p-6">
+            
+            <!-- Header -->
+            <header class="flex justify-between items-center pt-2">
+                <button type="button" class="text-white hover:text-gray-300 transition-colors p-2 rounded-full focus:outline-none" aria-label="الدعم الفني">
+                    <i class="fa-solid fa-headset text-2xl"></i>
+                </button>
 
-        <!-- أزرار إرسال واستلام -->
-        <div class="action-buttons">
-            <button class="action-btn" onclick="alert('إرسال أموال')">
-                <span>📤</span> إرسال
-            </button>
-            <button class="action-btn" onclick="alert('استقبال أموال')">
-                <span>📥</span> استقبال
-            </button>
-        </div>
+                <button type="button" class="text-white font-medium text-base hover:text-gray-300 transition-colors flex items-center gap-1 focus:outline-none">
+                    <span>الإنكليزية</span>
+                </button>
+            </header>
 
-        <!-- الخدمات السريعة الدائرية -->
-        <div class="services-grid">
-            <div class="service-item" onclick="alert('بنوك')">
-                <div class="service-icon">🏦</div>
-                <div class="service-name">بنوك</div>
-            </div>
-            <div class="service-item" onclick="alert('فواتير')">
-                <div class="service-icon">📄</div>
-                <div class="service-name">فواتير</div>
-            </div>
-            <div class="service-item" onclick="alert('مدفوعات')">
-                <div class="service-icon">💳</div>
-                <div class="service-name">مدفوعات</div>
-            </div>
-            <div class="service-item" onclick="alert('حوالات')">
-                <div class="service-icon">🔁</div>
-                <div class="service-name">حوالات</div>
-            </div>
-            <div class="service-item" onclick="alert('خدماتي')">
-                <div class="service-icon">⭐</div>
-                <div class="service-name">خدماتي</div>
-            </div>
-        </div>
-
-        <!-- آخر التحويلات -->
-        <div class="section-title">آخر التحويلات</div>
-        
-        <div class="tx-card">
-            <div class="tx-info">
-                <div class="tx-icon">📥</div>
-                <div class="tx-details">
-                    <span class="tx-name">مركز الحوالات الخارجية</span>
-                    <span class="tx-date">اليوم</span>
+            <!-- Main Content -->
+            <main class="flex-1 flex flex-col justify-center my-auto">
+                
+                <!-- Logo Section -->
+                <div class="flex justify-center mb-8">
+                    <div class="relative w-28 h-28 flex items-center justify-center">
+                        <svg width="90" height="90" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3bbd9b" />
+                                    <stop offset="100%" stop-color="#2d82b7" />
+                                </linearGradient>
+                                <linearGradient id="logoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3d52d5" />
+                                    <stop offset="100%" stop-color="#2c3a8c" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M 45 12 L 80 32 L 80 50 L 58 37 L 58 20 Z" fill="url(#logoGrad2)" />
+                            <path d="M 80 32 L 58 37 L 45 60 L 22 47 L 45 12 Z" fill="url(#logoGrad2)" opacity="0.9" />
+                            <path d="M 55 88 L 20 68 L 20 50 L 42 63 L 42 80 Z" fill="url(#logoGrad1)" />
+                            <path d="M 20 68 L 42 63 L 55 40 L 78 53 L 55 88 Z" fill="url(#logoGrad1)" opacity="0.9" />
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <div class="tx-amount">+ 13,000 USD</div>
-        </div>
-    </div>
 
-</body>
-</html>
+                <!-- Form Title -->
+                <h1 class="text-2xl md:text-3xl font-bold text-center mb-8 text-white">
+                    تسجيل الدخول
+                </h1>
+
+                <!-- Form Inputs -->
+                <form id="loginForm" onsubmit="event.preventDefault(); goToDashboard();" class="space-y-4">
+                    
+                    <!-- Email Input -->
+                    <div class="relative flex items-center bg-inputBg rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-accentBlue transition-all">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            required
+                            placeholder="البريد الإلكتروني" 
+                            class="w-full bg-transparent text-white placeholder-textMuted focus:outline-none text-right pr-2 text-base font-medium"
+                        >
+                        <i class="fa-regular fa-user text-textMuted text-lg ml-1"></i>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="relative flex items-center bg-inputBg rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-accentBlue transition-all">
+                        <button 
+                            type="button" 
+                            onclick="togglePassword()" 
+                            class="text-textMuted hover:text-white transition-colors focus:outline-none pl-1"
+                            aria-label="إظهار/إخفاء كلمة المرور"
+                        >
+                            <i id="eyeIcon" class="fa-regular fa-eye text-lg"></i>
+                        </button>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            required
+                            placeholder="كلمة المرور" 
+                            class="w-full bg-transparent text-white placeholder-textMuted focus:outline-none text-right px-2 text-base font-medium"
+                        >
+                        <i class="fa-solid fa-lock text-textMuted text-lg ml-1"></i>
+                    </div>
+
+                    <!-- Forgot Password Link -->
+                    <div class="text-center pt-2">
+                        <span class="text-textMuted text-sm font-medium">هل نسيت كلمة المرور؟ </span>
+                        <a href="#" class="text-textLink hover:underline text-sm font-semibold transition-colors">تغيير كلمة المرور</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4">
+                        <button 
+                            type="submit" 
+                            class="w-full bg-accentBlue hover:bg-accentHover text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-accentBlue/20 transition-all duration-200 text-lg active:scale-[0.99]"
+                        >
+                            تسجيل الدخول
+                        </button>
+                    </div>
+
+                    <!-- Register Link -->
+                    <div class="text-center pt-2">
+                        <span class="text-textMuted text-sm font-medium">لا تملك حساب مسابقاً؟ </span>
+                        <a href="#" class="text-textLink hover:underline text-sm font-semibold transition-colors">إنشاء حساب</a>
+                    </div>
+
+                </form>
+            </main>
+
+            <!-- Footer -->
+            <footer class="flex flex-col items-center justify-center pt-6 pb-2 text-center">
+                <span class="text-textMuted text-xs font-semibold tracking-widest uppercase mb-2">
+                    POWERED BY
+                </span>
+                <div class="mb-1 text-textMuted opacity-80">
+                    <svg width="28" height="28" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M 30 20 L 70 20 L 85 50 L 70 80 L 30 80 L 15 50 Z" />
+                        <path d="M 40 35 L 60 35 L 70 50 L 60 65 L 40 65 L 30 50 Z" />
+                    </svg>
+                </div>
+                <span class="text-textMuted text-[11px] font-mono tracking-wider">
+                    V 3.0.0+1
+                </span>
+            </footer>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: DASHBOARD / WALLET (تظهر بعد الدخول) -->
+        <!-- ========================================== -->
+        <div id="dashboardScreen" class="screen screen-hidden w-full h-full flex flex-col justify-between relative pb-16">
+            
+            <!-- Scrollable Body Content -->
+            <div class="flex-1 overflow-y-auto px-5 pt-6 pb-6 space-y-6">
+                
+                <!-- Top Navigation Header -->
+                <header class="flex justify-between items-center">
+                    <!-- Right Icon: Gift / Wallet Badge (Pink) -->
+                    <button type="button" class="w-11 h-11 bg-pinkBtn/20 text-pinkBtn rounded-full flex items-center justify-center transition-transform active:scale-95">
+                        <i class="fa-solid fa-wallet text-xl"></i>
+                    </button>
+
+                    <!-- Center Toggle Pill: Currency Switcher (ليرة / USD) -->
+                    <div class="bg-bgCardDark p-1 rounded-full flex items-center border border-gray-800 text-xs font-bold w-44 justify-between">
+                        <button id="btnLira" onclick="switchCurrency('LIRA')" class="w-1/2 py-1.5 rounded-full text-center transition-colors text-gray-400">
+                            ليرة
+                        </button>
+                        <button id="btnUsd" onclick="switchCurrency('USD')" class="w-1/2 py-1.5 rounded-full text-center bg-white text-bgDark shadow">
+                            USD
+                        </button>
+                    </div>
+
+                    <!-- Left Icon: Notifications Bell with Badge -->
+                    <div class="relative">
+                        <button type="button" class="w-11 h-11 bg-bgCardDark text-white rounded-full flex items-center justify-center border border-gray-800 active:scale-95">
+                            <i class="fa-regular fa-bell text-xl"></i>
+                        </button>
+                        <span class="absolute top-0 right-0 bg-pinkBtn text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-bgDark">
+                            1
+                        </span>
+                    </div>
+                </header>
+
+                <!-- Balance Card -->
+                <div class="wallet-card rounded-3xl p-6 text-center text-white relative overflow-hidden shadow-2xl">
+                    <!-- Background Soft Lighting Circle -->
+                    <div class="absolute -top-10 -left-10 w-36 h-36 bg-cyanGlow/20 rounded-full blur-2xl pointer-events-none"></div>
+
+                    <!-- Header Text -->
+                    <p class="text-gray-200 text-sm font-semibold mb-2">إجمالي الرصيد</p>
+
+                    <!-- Large Balance Display -->
+                    <h2 id="balanceDisplay" class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
+                        USD 13,000
+                    </h2>
+
+                    <!-- Pending Balance -->
+                    <p class="text-xs text-blue-200 font-medium mb-6">0 رصيد مُعلّق</p>
+
+                    <!-- Action Buttons: Send & Receive -->
+                    <div class="grid grid-cols-2 gap-3 pt-1">
+                        <!-- Receive Button -->
+                        <button type="button" onclick="showToast('خيارات الاستلام')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-2xl py-3 px-4 flex items-center justify-center gap-2 font-bold text-sm transition-all active:scale-95">
+                            <i class="fa-solid fa-shapes text-cyanGlow text-base"></i>
+                            <span>استلام</span>
+                        </button>
+
+                        <!-- Send Button -->
+                        <button type="button" onclick="showToast('خيارات الإرسال')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-2xl py-3 px-4 flex items-center justify-center gap-2 font-bold text-sm transition-all active:scale-95">
+                            <i class="fa-regular fa-paper-plane text-pinkBtn text-base"></i>
+                            <span>إرسال</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Circular Action Shortcuts Grid (5 Icons) -->
+                <div class="grid grid-cols-5 gap-2 pt-1 text-center">
+                    
+                    <!-- 1. خدماتي -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="showToast('خدماتي')">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-bgCardDark group-hover:bg-accentBlue/20 rounded-full flex items-center justify-center text-accentBlue transition-all border border-gray-800">
+                            <i class="fa-regular fa-star text-lg"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-300">خدماتي</span>
+                    </div>
+
+                    <!-- 2. حوالات -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="showToast('حوالات')">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-bgCardDark group-hover:bg-accentBlue/20 rounded-full flex items-center justify-center text-accentBlue transition-all border border-gray-800">
+                            <i class="fa-solid fa-ticket text-lg"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-300">حوالات</span>
+                    </div>
+
+                    <!-- 3. مدفوعات -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="showToast('مدفوعات')">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-bgCardDark group-hover:bg-accentBlue/20 rounded-full flex items-center justify-center text-accentBlue transition-all border border-gray-800">
+                            <i class="fa-solid fa-layer-group text-lg"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-300">مدفوعات</span>
+                    </div>
+
+                    <!-- 4. فواتير -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="showToast('فواتير')">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-bgCardDark group-hover:bg-accentBlue/20 rounded-full flex items-center justify-center text-accentBlue transition-all border border-gray-800">
+                            <i class="fa-solid fa-receipt text-lg"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-300">فواتير</span>
+                    </div>
+
+                    <!-- 5. بنوك -->
+                    <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="showToast('بنوك')">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-bgCardDark group-hover:bg-accentBlue/20 rounded-full flex items-center justify-center text-accentBlue transition-all border border-gray-800">
+                            <i class="fa-solid fa-building-columns text-lg"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-300">بنوك</span>
+                    </div>
+
+                </div>
+
+                <!-- Recent Transactions Section -->
+                <div class="pt-2">
+                    <h3 class="text-base font-bold text-white mb-3 text-right">
+                        آخر التحويلات
+                    </h3>
+
+                    <div class="space-y-3">
+                        
+                        <!-- Transaction 1 -->
+                        <div class="bg-bgCardDark rounded-2xl p-4 flex items-center justify-between border border-gray-800/80">
+                            <div class="flex items-center gap-2 text-cyanGlow font-bold dir-ltr">
+                                <i class="fa-solid fa-arrow-down text-xs"></i>
+                                <span class="text-sm">+ 13,000 USD</span>
+                            </div>
+                            <span class="text-sm font-bold text-gray-200">
+                                مركز الحوالات الخارجية
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <nav class="absolute bottom-0 left-0 right-0 bg-bgCardDark border-t border-gray-800/80 px-4 py-2 flex justify-between items-center z-20 md:rounded-b-[40px]">
+                
+                <button type="button" class="flex flex-col items-center gap-1 text-accentBlue w-1/5 focus:outline-none">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span class="text-[10px] font-bold">الرئيسية</span>
+                </button>
+
+                <button type="button" onclick="showToast('التحويلات')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white w-1/5 focus:outline-none">
+                    <i class="fa-solid fa-arrow-right-arrow-left text-lg"></i>
+                    <span class="text-[10px] font-bold">التحويلات</span>
+                </button>
+
+                <div class="w-1/5 flex justify-center relative -top-4">
+                    <button type="button" onclick="showToast('الإجراء السريع')" class="w-12 h-12 bg-cyanGlow text-bgDark rounded-full flex items-center justify-center font-bold shadow-lg quick-btn-glow active:scale-90 transition-transform">
+                        <i class="fa-solid fa-repeat text-xl"></i>
+                    </button>
+                </div>
+
+                <button type="button" onclick="showToast('الخدمات')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white w-1/5 focus:outline-none">
+                    <i class="fa-solid fa-grid-2 text-lg"></i>
+                    <span class="text-[10px] font-bold">الخدمات</span>
+                </button>
+
+                <button type="button" onclick="logout()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white w-1/5 focus:outline-none" title="تسجيل الخروج">
+                    <i class="fa-regular fa-user text-lg"></i>
+                    <span class="text-[10px] font-bold">حس
